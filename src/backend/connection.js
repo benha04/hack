@@ -1,15 +1,26 @@
-import mongoose from 'mongoose';
-import Blog from './model/Blog.js';
+// This is the connection file that connects to the MongoDB Atlas cluster using the MongoDB Node.js driver.
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://patrickvyn:P41n0tr33@cluster0.z30i1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect("mongodb+srv://patrickvyn:P41n0tr33@cluster0.z30i1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
-import mongoose from 'mongoose';
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
-const MONGO_URI = 'mongodb+srv://your_username:your_password@your_cluster.mongodb.net/your_database_name?retryWrites=true&w=majority';
-
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true   
-
-})
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
