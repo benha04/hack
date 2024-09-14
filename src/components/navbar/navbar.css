@@ -1,0 +1,70 @@
+/* Navbar styles */
+.navbar {
+    position: fixed; /* Sticky effect */
+    top: 0;
+    width: 100%;
+    background-color: #333; /* Dark background color */
+    padding: 25px 20px; /* Adjust padding here for desired space */
+    display: flex;
+    justify-content: space-between; /* Space between left and right content */
+    align-items: center;
+    z-index: 1000; /* Stay on top */
+    box-sizing: border-box; /* Ensures padding doesn't affect total width */
+  }
+  
+  .navbar-left {
+    margin-left: 0; /* Remove any margin affecting the left side */
+  }
+  
+  .navbar-left h1 {
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-right {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1; /* Ensures right-side content grows to fill the space */
+  }
+  
+  .navbar-right ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-right ul li {
+    margin-left: 20px;
+  }
+  
+  .navbar-right ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    white-space: nowrap; /* Prevent breaking long text */
+  }
+  
+  .navbar-right ul li a:hover {
+    color: #61dafb; /* Hover color effect */
+  }
+  
+  /* Ensures page content is not hidden by the fixed navbar */
+  body {
+    padding-top: 70px; /* Adjust to the height of your navbar */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .navbar-right ul {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  
+    .navbar-right ul li {
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+  }
+  
