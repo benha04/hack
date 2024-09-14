@@ -78,6 +78,7 @@ def parsePlayerData(match_id):
         for player in playerData:
             if player['playerid'] == playerid:
                 foundPlayer = True
+                player['summoner_name'] = summoner_name
                 player['kills'] += kills
                 player['deaths'] += deaths
                 player['assists'] += assists
@@ -99,8 +100,13 @@ def calculateKDA():
     loop through playerdata
     calculate kda for each player and then add to the hashmap
     """
+    for player in playerData:
+        kills = player['kills']
+        deaths = player['deaths']
+        assists = player['assists']
 
-    return None
+        player['kda'] = (kills+assists)/deaths
+
 
 
 def updatePlayer():
@@ -109,8 +115,20 @@ def updatePlayer():
     if not then it creates a new playerid area
     
     """
+    for player in playerData:
+        playerID = player['playerid']  # Changed from playerData to player
+        players.update_one(
+            {"PlayerID": playerID},  # Filter by PlayerID
+            {"$set": {  # Use $set operator to update or set fields
+                "kills": player['kills'],
+                "deaths": player['deaths'],
+                "assists": player['assists'],
+                "vision_score": player['vision_score'],
+                "gold_earned": player['gold_earned']
+            }},
+            upsert=True  # If PlayerID doesn't exist, create a new document
+        )
 
-    return None
 
 
 def updateLeaderBoard():
@@ -122,3 +140,9 @@ def updateLeaderBoard():
 
 
     return None
+
+
+
+enterMatchData()
+calculateKDA()
+updatePlayer()
