@@ -19,6 +19,7 @@ const card = (
 
   </React.Fragment>
 );
+
 const Home = () => {
   const [collectionNames, setCollectionNames] = useState([]);
 
@@ -36,6 +37,7 @@ const Home = () => {
     fetchData();
   }, []);
 
+  
   return (
     <div>
       <h1>Gobbler Gauntlet</h1>
