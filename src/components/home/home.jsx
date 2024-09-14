@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import '../../App.css';
 
 const card = (
   <React.Fragment>
@@ -41,8 +42,9 @@ const Home = () => {
   return (
     <div>
       <h1>Gobbler Gauntlet</h1>
-      <Card variant="outlined">{card}</Card>
-
+      <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333' }}>
+        {card}
+      </Card>
 
       <h1>Collection Names</h1>
       <ul>
