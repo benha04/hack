@@ -1,6 +1,6 @@
 import React from 'react';
 import './navbar.css'; // Importing the CSS for the navbar
-import LinearGradient from 'react-native-linear-gradient'; //importing the Linear Gradient for navbars
+
 function Navbar() {
   return (
     <nav className="navbar">
