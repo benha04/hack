@@ -1,4 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+const card = (
+  <React.Fragment>
+    <CardContent>
+
+      <Typography variant="h5" component="div">
+        Best KDA Player
+      </Typography>
+      <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>Player Name</Typography>
+
+    </CardContent>
+
+  </React.Fragment>
+);
 
 const Home = () => {
   const [collectionNames, setCollectionNames] = useState([]);
@@ -36,6 +56,9 @@ const Home = () => {
   return (
     <div>
       <h1>Gobbler Gauntlet</h1>
+      <Card variant="outlined">{card}</Card>
+
+
       <h1>Collection Names</h1>
       <ul>
         {collectionNames.map((name, index) => (
