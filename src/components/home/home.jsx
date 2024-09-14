@@ -12,10 +12,8 @@ const card = (
   <React.Fragment>
     <CardContent>
 
-      <Typography variant="h5" component="div">
-        Best KDA Player
-      </Typography>
-      <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>Player Name</Typography>
+      <h5>Best KDA Player</h5>
+      <h6>Player name </h6>
 
     </CardContent>
 
