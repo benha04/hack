@@ -11,3 +11,60 @@ h5{
 h6{
     color: #F8F3DE
 }
+/* Center the content on the page */
+.home-container {
+    margin-top: 50px;
+    text-align: center;
+  }
+  
+  .gobbler-heading {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+  
+  /* Main Grid Layout */
+  .main-grid {
+    padding: 0 40px;
+  }
+  
+  /* Section titles for each half */
+  .section-title {
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  /* Card Styling */
+  .player-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .player-card-content {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Avatar */
+  .player-avatar {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+  }
+  
+  /* Player info inside the card */
+  .player-info {
+    text-align: left;
+  }
+  
+  .player-info h6 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .player-info p {
+    margin: 5px 0;
+  }
+  
