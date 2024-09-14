@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import Connection from '../../backend/connection';
+const Home = () => {
+  const [collectionNames, setCollectionNames] = useState([]);
 
-const Home = (props) => {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { default: getCollections } = await import('../../server/connect.cjs');
+        const collections = await getCollections();
+        setCollectionNames(collections.map(collection => collection.s.namespace.collection));
+      } catch (error) {
+        console.error('Error fetching collections:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="home-container">
+    <div>
       <h1>Gobbler Gauntlet</h1>
-      {/* Display the Connection component*/}
-      <Connection />
+      <h1>Collection Names</h1>
+      <ul>
+        {collectionNames.map((name, index) => (
+          <li key={index}>{name}</li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
 export default Home;
