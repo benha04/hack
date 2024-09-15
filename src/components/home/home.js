@@ -91,14 +91,22 @@ const Home = () => {
       {/* Render  a card with leading icon and title "Most Kills" with  6  card  elements  after it that have player name, kills, deaths, assists, and gold earned */}
       <Grid2
         container
-        spacing={10}
+        spacing={2}
+        xs={12}
+        direction="column"
+        justifyContent="center"
+      >
+        
+        <Grid2
+        container
+        spacing={3}
         xs={12}
         direction="row"
         justifyContent="center"
       >
         <Grid2 container item xs={6} justifyContent="center">
           <Ranking
-            customIcon = "/icons/primary.png"
+            customIcon = "/icons/Placements.png"
             title="Most Kills"
             one="Agura"
             two="Jayoma"
@@ -109,7 +117,28 @@ const Home = () => {
         </Grid2>
         <Grid2 container item xs={6} justifyContent="center">
           <Ranking
+            customIcon = "/icons/Deaths.png"
+
             title="Most Deaths"
+            one="Agura"
+            two="Jayoma"
+            three="ERIK"
+            four="ABEAS"
+            five="MasterMi"
+          />
+        </Grid2>
+        </Grid2>
+        <Grid2
+        container
+        spacing={3}
+        xs={12}
+        direction="row"
+        justifyContent="center"
+      >
+        <Grid2 container item xs={6} justifyContent="center">
+          <Ranking
+            customIcon = "/icons/Gold.png"
+            title="Most Gold Earned"
             one="Agura"
             two="Jayoma"
             three="ERIK"
@@ -119,7 +148,9 @@ const Home = () => {
         </Grid2>
         <Grid2 container item xs={6} justifyContent="center">
           <Ranking
-            title="Most Deaths"
+            customIcon = "/icons/Assists.png"
+
+            title="Most Assists"
             one="Agura"
             two="Jayoma"
             three="ERIK"
@@ -127,15 +158,6 @@ const Home = () => {
             five="MasterMi"
           />
         </Grid2>
-        <Grid2 container item xs={6} justifyContent="center">
-          <Ranking
-            title="Most Deaths"
-            one="Agura"
-            two="Jayoma"
-            three="ERIK"
-            four="ABEAS"
-            five="MasterMi"
-          />
         </Grid2>
       </Grid2>
     </>

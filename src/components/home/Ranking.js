@@ -20,7 +20,7 @@ const Ranking = (props) => {
           color: "#333",
           borderRadius: "40px",
           marginTop: "40px",
-          width: "700px",
+          minWidth: "500px",
         }}
       >
         <CardContent>
@@ -28,9 +28,9 @@ const Ranking = (props) => {
       <img
         src={props.customIcon}
         alt="Custom Icon"
-        style={{ width: '64px', height: '64px', marginRight: '8px' }}
+        style={{ width: '32px', height: '32px', marginRight: '8px' }}
       />
-      <Typography variant="h1" color="white">
+      <Typography variant="h1" color="white" sx = {{marginBottom: "10px"}}>
         {props.title}
       </Typography>
     </div>
