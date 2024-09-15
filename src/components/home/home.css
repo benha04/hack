@@ -68,3 +68,8 @@ h6{
     margin: 5px 0;
   }
   
+  .champion-image {
+    width: 500px; /* Adjust size as needed */
+    height: auto;
+  }
+  

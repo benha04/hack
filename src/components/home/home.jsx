@@ -54,13 +54,25 @@ const Home = () => {
     <div className="home-container">
       <h1 className="gobbler-heading">Gobbler Gauntlet</h1>
 
-      {/* Best KDA Player Card */}
-      <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333', marginBottom: 4 }}>
-        {card}
-      </Card>
+      {/* Best KDA Player Card with Ashe and Lucian Images */}
+      <Grid container justifyContent="center" alignItems="center" spacing={2} className="best-kda-section">
+        <Grid item>
+          <img src = "images/ashe-removebg-preview.png" alt="Ashe" className="champion-image" />
+        </Grid>
+
+        <Grid item>
+          <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333', padding: 4 }}>
+            {card}
+          </Card>
+        </Grid>
+
+        <Grid item>
+          <img src="images/lucian-removebg-preview.png" alt="Lucian" className="champion-image" />
+        </Grid>
+      </Grid>
 
       {/* Top Killers and Deaths Grid */}
-      <Grid container spacing={4}>
+      <Grid container spacing={4} className="kills-deaths-section">
         
         {/* Top 6 Players - Kills Section */}
         <Grid item xs={12} md={6}>
