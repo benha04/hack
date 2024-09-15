@@ -7,6 +7,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the project directory, you can run:
 
 ## Running the code
+npm install express mongoose cors
+
 First run code 
 'node server/index.js'
 
