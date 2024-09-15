@@ -11,7 +11,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "express": "^4.21.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.6.2",
     "react": "^18.3.1",
@@ -23,8 +26,8 @@
   },
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start --transformIgnorePatterns \"node_modules/(?!@mui)/\"",
+    "build": "react-scripts build --transformIgnorePatterns \"node_modules/(?!@mui)/\"",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@mui)/\"",
     "eject": "react-scripts eject"
   },
