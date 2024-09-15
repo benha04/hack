@@ -25,6 +25,8 @@ const Home = () => {
       { name: 'Mike Johnson', kills: 10, img: '/images/player.jpg' },
       { name: 'Sarah Brown', kills: 9, img: '/images/player.jpg' },
       { name: 'Alex King', kills: 8, img: '/images/player.jpg' },
+      { name: 'Chris Lee', kills: 7, img: '/images/player.jpg' } // Added 6th player for kills
+
     ];
 
     const fetchedDeaths = [
@@ -33,6 +35,8 @@ const Home = () => {
       { name: 'Mike Johnson', deaths: 8, img: '/images/player.jpg' },
       { name: 'Sarah Brown', deaths: 7, img: '/images/player.jpg' },
       { name: 'Alex King', deaths: 6, img: '/images/player.jpg' },
+      { name: 'Chris Lee', deaths: 5, img: '/images/player.jpg' } // Added 6th player for deaths
+
     ];
 
     // Simulate delay
@@ -58,12 +62,12 @@ const Home = () => {
       {/* Top Killers and Deaths Grid */}
       <Grid container spacing={4}>
         
-        {/* Top 5 Players - Kills Section */}
+        {/* Top 6 Players - Kills Section */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top 5 Players - Kills</Typography>
+          <Typography variant="h5" className="section-title">Top 6 Players - Kills</Typography>
           <Grid container spacing={2}>
             {topKillers.map((player, index) => (
-              <Grid item xs={12} sm={6} lg={5} key={index}>
+              <Grid item xs={12} sm={6} lg={6} key={index}>
                 <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333' }}>
                   <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar src={player.img} alt={`${player.name} Image`} />
@@ -78,12 +82,12 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        {/* Top 5 Players - Deaths Section */}
+        {/* Top 6 Players - Deaths Section */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top 5 Players - Deaths</Typography>
+          <Typography variant="h5" className="section-title">Top 6 Players - Deaths</Typography>
           <Grid container spacing={2}>
             {topDeaths.map((player, index) => (
-              <Grid item xs={12} sm={6} lg={5} key={index}>
+              <Grid item xs={12} sm={6} lg={6} key={index}>
                 <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333' }}>
                   <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar src={player.img} alt={`${player.name} Image`} />
