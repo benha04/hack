@@ -42,8 +42,8 @@ mongoose.connection.once('open', () => {
       .catch(err => res.json(err)); 
   });
 
-  // //Getting the  database collections
-  app.get('/api/LeagueOfLegends/collections', async (req, res) => {
+  //Getting the  database collections
+  app.get('/api/LeagueOfLegends/leaderboard', async (req, res) => {
     try {
       const result = await database.collection("leaderboard").find({}).toArray();
       res.send(result);
@@ -52,10 +52,29 @@ mongoose.connection.once('open', () => {
       res.status(500).send('Internal Server Error');
     }
   });
-    // const collectionsCursor = await database.listCollections().toArray();
-    // const collectionNames = collectionsCursor.map(collection => collection.name);
-    // res.json(collectionNames);
-  //});
+
+  //Getting the  database players
+  app.get('/api/LeagueOfLegends/leaderboard', async (req, res) => {
+    try {
+      const result = await database.collection("leaderboard").find({}).toArray();
+      res.send(result);
+    } catch (err) {
+      console.error('Error fetching collections:', err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  //Getting the  database players
+  app.get('/api/LeagueOfLegends/players', async (req, res) => {
+    try {
+      const result = await database.collection("players").find({}).toArray();
+      res.send(result);
+    } catch (err) {
+      console.error('Error fetching collections:', err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+    
 
   // // ------Posts------
   // app.post('/api/LeagueOfLegends/add', async (req, res) => {
