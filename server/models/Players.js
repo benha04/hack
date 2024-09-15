@@ -8,6 +8,7 @@ const playerSchema = new mongoose.Schema({
     kills: Number,
     vision_score: Number,
     summoner_name: String,
+    summoner_profile_id: Number,
     kda: String,
 });
 

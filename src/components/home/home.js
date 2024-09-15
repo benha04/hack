@@ -17,6 +17,8 @@ import Ranking from "./Ranking.js";
 // import BestPlayerIcon from "icons/primary.png";
 
 const Home = () => {
+
+  const BestPlayerIcon = "/images/primary.png";
   return (
     <>
       <Box
@@ -96,7 +98,7 @@ const Home = () => {
       >
         <Grid2 container item xs={6} justifyContent="center">
           <Ranking
-            customIcon = "images/primary.png"
+            customIcon = "/icons/primary.png"
             title="Most Kills"
             one="Agura"
             two="Jayoma"

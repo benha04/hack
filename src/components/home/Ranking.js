@@ -24,16 +24,16 @@ const Ranking = (props) => {
         }}
       >
         <CardContent>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <img
-              src={props.customIcon}
-              alt="Custom Icon"
-              style={{ width: "24px", height: "24px", marginRight: "8px" }}
-            />
-            <Typography variant="h1" color="white">
-              {props.title}
-            </Typography>
-          </div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      <img
+        src={props.customIcon}
+        alt="Custom Icon"
+        style={{ width: '64px', height: '64px', marginRight: '8px' }}
+      />
+      <Typography variant="h1" color="white">
+        {props.title}
+      </Typography>
+    </div>
           <Grid2 container spacing={2} xs={12} direction={"column"}>
             <Grid2 item xs={12}>
               <Player name={props.one} />
