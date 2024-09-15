@@ -1,0 +1,75 @@
+{/* Kills and Deaths Side by Side */}
+      <Grid container spacing={4} className="kills-deaths-section">
+        
+        {/* Left Half: Top Players by Kills */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Kills</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostKills') &&
+              [leaderBoard.find(l => l.category === 'mostKills').one,
+              leaderBoard.find(l => l.category === 'mostKills').two,
+              leaderBoard.find(l => l.category === 'mostKills').three,
+              leaderBoard.find(l => l.category === 'mostKills').four,
+              leaderBoard.find(l => l.category === 'mostKills').five,
+              leaderBoard.find(l => l.category === 'mostKills').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+
+        {/* Right Half: Top Players by Deaths */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Deaths</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostDeaths') &&
+              [leaderBoard.find(l => l.category === 'mostDeaths').one,
+              leaderBoard.find(l => l.category === 'mostDeaths').two,
+              leaderBoard.find(l => l.category === 'mostDeaths').three,
+              leaderBoard.find(l => l.category === 'mostDeaths').four,
+              leaderBoard.find(l => l.category === 'mostDeaths').five,
+              leaderBoard.find(l => l.category === 'mostDeaths').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Gold Earned and Assists Side by Side */}
+      <Grid container spacing={4} className="gold-assists-section">
+        
+        {/* Left Half: Top Players by Gold Earned */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Gold Earned</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostGold') &&
+              [leaderBoard.find(l => l.category === 'mostGold').one,
+              leaderBoard.find(l => l.category === 'mostGold').two,
+              leaderBoard.find(l => l.category === 'mostGold').three,
+              leaderBoard.find(l => l.category === 'mostGold').four,
+              leaderBoard.find(l => l.category === 'mostGold').five,
+              leaderBoard.find(l => l.category === 'mostGold').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+
+        {/* Right Half: Top Players by Assists */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Assists</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostAssists') &&
+              [leaderBoard.find(l => l.category === 'mostAssists').one,
+              leaderBoard.find(l => l.category === 'mostAssists').two,
+              leaderBoard.find(l => l.category === 'mostAssists').three,
+              leaderBoard.find(l => l.category === 'mostAssists').four,
+              leaderBoard.find(l => l.category === 'mostAssists').five,
+              leaderBoard.find(l => l.category === 'mostAssists').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+      </Grid>

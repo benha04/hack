@@ -59,6 +59,7 @@ class DatabaseComponent extends React.Component {
             <Typography>Gold Earned: {collection.gold_earned}</Typography>
             <Typography>Kills: {collection.kills}</Typography>
             <Typography>Vision Score: {collection.vision_score}</Typography>
+            <Typography>Summoner Name: {collection.summoner_name}</Typography>
           </div>
         )}
       </div>
