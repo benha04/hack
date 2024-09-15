@@ -39,6 +39,11 @@ const Home = () => {
     return player ? player : {};
   };
 
+  const findSummonerProfileId = (summoner_name) => {
+    const player = players.find((p) => p.summoner_name === summoner_name);
+    return player ? player.summoner_profile_id : null;
+  };
+
   // Render player stats for each ranking category (e.g., kills for "Most Kills")
   const renderRankingWithStats = (category, playerStat) => {
     const relevantPlayers = leaderBoard.find((entry) => entry.category === category);

@@ -1,86 +1,52 @@
-h1 {
-    color: #1B1520
+/* home.css */
+
+/* Existing styles ... */
+
+/* Best Player Card Styles */
+.best-player-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-/* bello */
-
-h5{
-    color: #F8F3DE
-}
-
-h6{
-    color: #F8F3DE
-}
-/* Center the content on the page */
-.home-container {
-    margin-top: 50px;
-    text-align: center;
-  }
-  
-  .gobbler-heading {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-  }
-  
-  /* Main Grid Layout */
-  .main-grid {
-    padding: 0 40px;
-  }
-  
-  /* Section titles for each half */
-  .section-title {
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-align: left;
-  }
-  
-  /* Card Styling */
-  .player-card {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-/* Add to your existing CSS */
-.player-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  margin: 5px;
-  background-color: #3A2B32;
-  color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  word-wrap: break-word;
-}
-
-.player-card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%; /* Ensure content fits within the card */
-}
-
-.player-info {
-  text-align: center;
-  width: 100%; /* Ensure text does not overflow */
-}
-
-.player-avatar {
-  margin-bottom: 10px;
-}
-
-.typography-overflow {
-  font-size: 0.875rem; /* Smaller font size for player ID */
+.best-player-card {
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%; /* Limit width to prevent overflow */
+  border: 3px solid transparent;
 }
 
-  .champion-image {
-    width: 500px; /* Adjust size as needed */
-    height: auto;
-  }
-  
+.best-player-card::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; bottom: -2px; right: -2px;
+  background: linear-gradient(45deg, red, orange, yellow, orange, red);
+  background-size: 400% 400%;
+  animation: gradientAnimation 5s ease infinite;
+  z-index: -1;
+}
+
+.best-player-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: #2A2126;
+  z-index: -2;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Adjust h1 color */
+h1 {
+  color: #FDF2E7;
+}

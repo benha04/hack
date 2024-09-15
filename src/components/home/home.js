@@ -3,34 +3,34 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid2,
+  Grid,
   Box,
   Avatar,
   useMediaQuery,
 } from "@mui/material";
-
-import "../../App.css";
 import "./home.css";
-
 import Player from "./Player.js";
 import Ranking from "./Ranking.js";
 
-// import BestPlayerIcon from "icons/primary.png";
+// Importing custom icons
 import Death from "../../icons/Deaths.png";
 import Gold from "../../icons/Gold.png";
 import Placements from "../../icons/Placements.png";
 import Assists from "../../icons/Assists.png";
 
 const Home = () => {
-
   const [leaderBoard, setLeaderBoard] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [bestPlayerStats, setBestPlayerStats] = useState(null); // State for best player stats
   const API_URL = "http://localhost:3001/";
+
+  // Custom icons
   const customDeaths = Death;
   const customGold = Gold;
   const customAssists = Assists;
   const customPlacements = Placements;
 
+  // Media queries for responsiveness
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery((theme) => theme.breakpoints.between('sm', 'md'));
   const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up('md'));
@@ -57,6 +57,34 @@ const Home = () => {
 
       setLeaderBoard(leaderboardData);
       setPlayers(playersData);
+
+      // Compute the best player based on highest KDA
+      let bestPlayer = null;
+      let highestKDA = -1;
+
+      playersData.forEach(player => {
+        const kills = player.kills || 0;
+        const deaths = player.deaths || 0;
+        const assists = player.assists || 0;
+        const kda = ((kills + assists) / Math.max(1, deaths));
+
+        if (kda > highestKDA) {
+          highestKDA = kda;
+          bestPlayer = {
+            name: player.summoner_name,
+            kills: kills,
+            deaths: deaths,
+            assists: assists,
+            kda: kda.toFixed(2),
+            profileId: player.summoner_profile_id,
+          };
+        }
+      });
+
+      // Set best player's stats if found
+      if (bestPlayer) {
+        setBestPlayerStats(bestPlayer);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -72,31 +100,45 @@ const Home = () => {
     return player ? player : {};
   };
 
-  // Render player stats for each ranking category (e.g., kills for "Most Kills")
-  const renderRankingWithStats = (category, playerStat, path) => {
+  // Render player stats for each ranking category
+  const renderRankingWithStats = (category, playerStat, icon) => {
     const relevantPlayers = leaderBoard.find((entry) => entry.category === category);
     if (!relevantPlayers) return null;
 
     return (
-      <Grid2 container item xs={6} justifyContent="center">
-       <Ranking
-         customIcon = {path}
-
-         title={category}
-         one={{ name: relevantPlayers.one, stat: findPlayerStats(relevantPlayers.one)[playerStat] }}
-         two={{ name: relevantPlayers.two, stat: findPlayerStats(relevantPlayers.two)[playerStat] }}
-         three={{ name: relevantPlayers.three, stat: findPlayerStats(relevantPlayers.three)[playerStat] }}
-           four={{ name: relevantPlayers.four, stat: findPlayerStats(relevantPlayers.four)[playerStat] }}
-           five={{ name: relevantPlayers.five, stat: findPlayerStats(relevantPlayers.five)[playerStat] }}
-          six={{ name: relevantPlayers.six, stat: findPlayerStats(relevantPlayers.six)[playerStat] }}
-      />
-    </Grid2>
-
-      
+      <Grid item xs={12} md={6} justifyContent="center">
+        <Ranking
+          customIcon={icon}
+          title={category}
+          one={{
+            name: relevantPlayers.one,
+            stat: findPlayerStats(relevantPlayers.one)[playerStat],
+            pic_id: findPlayerStats(relevantPlayers.one).summoner_profile_id,
+          }}
+          two={{
+            name: relevantPlayers.two,
+            stat: findPlayerStats(relevantPlayers.two)[playerStat],
+            pic_id: findPlayerStats(relevantPlayers.two).summoner_profile_id,
+          }}
+          three={{
+            name: relevantPlayers.three,
+            stat: findPlayerStats(relevantPlayers.three)[playerStat],
+            pic_id: findPlayerStats(relevantPlayers.three).summoner_profile_id,
+          }}
+          four={{
+            name: relevantPlayers.four,
+            stat: findPlayerStats(relevantPlayers.four)[playerStat],
+            pic_id: findPlayerStats(relevantPlayers.four).summoner_profile_id,
+          }}
+          five={{
+            name: relevantPlayers.five,
+            stat: findPlayerStats(relevantPlayers.five)[playerStat],
+            pic_id: findPlayerStats(relevantPlayers.five).summoner_profile_id,
+          }}
+        />
+      </Grid>
     );
   };
-
-  
 
   return (
     <>
@@ -107,11 +149,13 @@ const Home = () => {
           height: "90vh",
           marginTop: "40px",
           background: "linear-gradient(to right, #5D31EC, #861C54)",
+          overflow: 'hidden',
         }}
       >
         <img
           src="images/ashe-removebg-preview.png"
-          alt="Landing Page"
+          alt="Ashe"
+          className="champion-image"
           style={{
             position: "absolute",
             top: 0,
@@ -121,8 +165,9 @@ const Home = () => {
           }}
         />
         <img
-          src="/images/lucian-removebg-preview.png" // Replace with the actual path to your image
-          alt="Another Image"
+          src="/images/lucian-removebg-preview.png"
+          alt="Lucian"
+          className="champion-image"
           style={{
             position: "absolute",
             bottom: 0,
@@ -131,75 +176,71 @@ const Home = () => {
             height: "427px",
           }}
         />
-        <Card
-          variant="outlined"
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -80%)",
-            backgroundColor: "#3A2B32",
-            color: "#333",
-            borderRadius: "40px",
-            marginTop: "0px",
-            width: getCardWidth(), // Set dynamic width
-          }}
-        >
-          <CardContent>
-            <Typography variant="h1" color="white">
-              Best Player
-            </Typography>
 
-            <Grid2 container spacing={2} xs={12} direction={"row"}>
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                sx={{
-                  width: 128,
-                  height: 128,
-                  marginLeft: "16px",
-                  marginRight: "16px",
-                }}
-              />
-              <Typography variant="h6">Player: Jayoma</Typography>
-            </Grid2>
-          </CardContent>
-        </Card>
+        {/* Best Player Card with Stats */}
+        <Box 
+          display="flex" 
+          justifyContent="center" 
+          alignItems="center" 
+          height="100vh" // Ensures it fills the entire height of the viewport
+        >
+          <Card
+            variant="outlined"
+            className="best-player-card" // Add class for styling
+            sx={{
+              backgroundColor: "#2A2126",
+              color: "#FDF2E7",
+              borderRadius: "20px",
+              padding: "20px",
+              width: getCardWidth(), // Use dynamic width
+              boxShadow: "0 15px 30px rgba(0,0,0,0.5)",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h1" align="center">
+                Best Player
+              </Typography>
+
+              {bestPlayerStats ? (
+                <Grid container spacing={2} alignItems="center" justifyContent="center">
+                  <Avatar
+                    alt={bestPlayerStats.name}
+                    src={`https://ddragon.leagueoflegends.com/cdn/13.19.1/img/profileicon/${bestPlayerStats.profileId}.png`}
+                    sx={{
+                      width: 128,
+                      height: 128,
+                      marginTop: "20px",
+                    }}
+                    className="player-avatar"
+                  />
+                  <Grid item xs={12} style={{ textAlign: 'center' }}>
+                    <Typography variant="h3">Player: {bestPlayerStats.name}</Typography>
+                    <Typography variant="h5">Kills: {bestPlayerStats.kills}</Typography>
+                    <Typography variant="h5">Deaths: {bestPlayerStats.deaths}</Typography>
+                    <Typography variant="h5">Assists: {bestPlayerStats.assists}</Typography>
+                    <Typography variant="h5">KDA: {bestPlayerStats.kda}</Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <Typography variant="body1">Loading player stats...</Typography>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
 
-      {/* Render  a card with leading icon and title "Most Kills" with  6  card  elements  after it that have player name, kills, deaths, assists, and gold earned */}
-      <Grid2
-        container
-        spacing={2}
-        xs={12}
-        direction="column"
-        justifyContent="center"
-      >
-        
-        <Grid2
-        container
-        spacing={3}
-        xs={12}
-        direction="row"
-        justifyContent="center"
-      >
-        {renderRankingWithStats("mostKills", "kills", customPlacements)}
-
-        {renderRankingWithStats("mostDeaths", "deaths", customDeaths)}
-        </Grid2>
-        <Grid2
-        container
-        spacing={3}
-        xs={12}
-        direction="row"
-        justifyContent="center"
-      >
-        {renderRankingWithStats("mostAssists", "assists", customAssists)}
-
-        {renderRankingWithStats("mostGold", "gold_earned", customGold)}
-
-        </Grid2>
-      </Grid2>
+      {/* Rankings Section */}
+      <div className="home-container">
+        <Typography variant="h1" className="section-title">
+          Player Rankings
+        </Typography>
+        <Grid container spacing={4} justifyContent="center">
+          {renderRankingWithStats("mostKills", "kills", customPlacements)}
+          {renderRankingWithStats("mostDeaths", "deaths", customDeaths)}
+          {renderRankingWithStats("mostAssists", "assists", customAssists)}
+          {renderRankingWithStats("mostGold", "gold_earned", customGold)}
+        </Grid>
+      </div>
     </>
   );
 };
