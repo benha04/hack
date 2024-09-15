@@ -8,16 +8,13 @@ import json
 uri = "mongodb+srv://zehan:q2w1e4r3t6y5@cluster0.z30i1.mongodb.net/?retryWrites=true&w=majority"
 
 api_key = "?api_key=RGAPI-d02ad7c4-fb12-4fd2-838e-124917b0da14"
-match_id = "5108988079"
 get_match_url = "https://americas.api.riotgames.com/lol/match/v5/matches/NA1_"
-get_account_url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/"
+get_summoner_url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/"
 
 #####################################################################################################
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
-
-
 db = client["LeagueOfLegends"]
 
 players = db["players"]
@@ -125,6 +122,15 @@ def updatePlayer():
     """
     for player in playerData:
         playerID = player['playerid']  # Changed from playerData to player
+        #grab the player summoner icon id
+        resp = requests.get(get_summoner_url + match_id + api_key)
+        summoner = resp.json()
+
+        summoner_profile_id = summoner["profileIconId"]
+        
+
+
+
         players.update_one(
             {"PlayerID": playerID},  # Filter by PlayerID
             {"$set": {  # Use $set operator to update or set fields
@@ -133,7 +139,9 @@ def updatePlayer():
                 "deaths": player['deaths'],
                 "assists": player['assists'],
                 "vision_score": player['vision_score'],
-                "gold_earned": player['gold_earned']
+                "gold_earned": player['gold_earned'],
+                "summoner_profile_id" : summoner_profile_id
+
             }},
             upsert=True  # If PlayerID doesn't exist, create a new document
         )
