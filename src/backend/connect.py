@@ -54,7 +54,6 @@ def enterMatchData():
 def parsePlayerData(match_id):
     playerIDs = []
     # Get match JSON
-    print(get_match_url + match_id + api_key)
     resp = requests.get(get_match_url + match_id + api_key)
     match = resp.json()
 
@@ -94,6 +93,7 @@ def parsePlayerData(match_id):
         
         if not foundPlayer:
             playerData.append({
+                'summoner_name' : summoner_name,
                 'playerid': playerid,
                 'kills': kills,
                 'deaths': deaths,
@@ -128,6 +128,7 @@ def updatePlayer():
         players.update_one(
             {"PlayerID": playerID},  # Filter by PlayerID
             {"$set": {  # Use $set operator to update or set fields
+                "summoner_name": player['summoner_name'],
                 "kills": player['kills'],
                 "deaths": player['deaths'],
                 "assists": player['assists'],
@@ -170,12 +171,8 @@ def updateLeaderBoard():
         numbers = ["one", "two", "three", "four", "five", "six"]
         # Add ranked players to the document
         for idx, player in enumerate(top_6, 0):
-            puuid = player['playerid']
-            resp = requests.get(get_account_url + puuid + api_key)
-            account = resp.json()
-            summoner_name = account['gameName']
             
-            category_document[numbers[idx]] = summoner_name
+            category_document[numbers[idx]] = player["summoner_name"]
 
         # Update or insert the category document
         leaderboard.update_one(
