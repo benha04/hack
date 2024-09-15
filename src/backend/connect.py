@@ -109,6 +109,7 @@ def calculateKDA():
         assists = player['assists']
         
         player['kda'] = (kills+assists)/deaths if deaths != 0 else kills + assists
+        player['kda'] = "{:.1f}".format(player['kda'])
 
 
 
@@ -139,6 +140,8 @@ def updatePlayer():
                 "assists": player['assists'],
                 "vision_score": player['vision_score'],
                 "gold_earned": player['gold_earned'],
+                "kda": player['kda']
+
 
             }},
             upsert=True  # If PlayerID doesn't exist, create a new document
