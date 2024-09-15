@@ -9,7 +9,7 @@ import Ranking from "./Ranking.js";
 const Home = () => {
   const [leaderBoard, setLeaderBoard] = useState([]);
   const [players, setPlayers] = useState([]);
-  const API_URL = "http://localhost:3001/";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/";
 
   // Fetch leaderboard and player data from the backend
   const fetchPlayerData = async () => {
