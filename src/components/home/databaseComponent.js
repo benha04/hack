@@ -36,12 +36,12 @@ class DatabaseComponent extends React.Component {
       <div>
         {collections.map( (collection) =>
             <div key={collection._id}>
-            <Typography>Player ID: {collection.PlayerID}</Typography>
-            <Typography>Assists: {collection.assists}</Typography>
-            <Typography>Deaths: {collection.deaths}</Typography>
-            <Typography>Gold Earned: {collection.gold_earned}</Typography>
-            <Typography>Kills: {collection.kills}</Typography>
-            <Typography>Vision Score: {collection.vision_score}</Typography>
+            <Typography>Category: {collection.category}</Typography>
+            <Typography>One: {collection.one}</Typography>
+            <Typography>Two: {collection.two}</Typography>
+            <Typography>Three: {collection.three}</Typography>
+            <Typography>Four: {collection.four}</Typography>
+            <Typography>Five: {collection.five}</Typography>
           </div>
         )}
       </div>

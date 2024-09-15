@@ -45,7 +45,7 @@ mongoose.connection.once('open', () => {
   // //Getting the  database collections
   app.get('/api/LeagueOfLegends/collections', async (req, res) => {
     try {
-      const result = await database.collection("players").find({}).toArray();
+      const result = await database.collection("leaderboard").find({}).toArray();
       res.send(result);
     } catch (err) {
       console.error('Error fetching collections:', err);
