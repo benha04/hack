@@ -7,7 +7,7 @@ import json
 #####################################################################################################
 uri = "mongodb+srv://zehan:q2w1e4r3t6y5@cluster0.z30i1.mongodb.net/?retryWrites=true&w=majority"
 
-api_key = "?api_key=RGAPI-d02ad7c4-fb12-4fd2-838e-124917b0da14"
+api_key = "?api_key=RGAPI-6e0410ac-c3f0-49a4-b147-a88094929534"
 get_match_url = "https://americas.api.riotgames.com/lol/match/v5/matches/NA1_"
 get_summoner_url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/"
 
@@ -53,8 +53,6 @@ def parsePlayerData(match_id):
     # Get match JSON
     resp = requests.get(get_match_url + match_id + api_key)
     match = resp.json()
-
-
 
 
     
@@ -123,7 +121,7 @@ def updatePlayer():
     for player in playerData:
         playerID = player['playerid']  # Changed from playerData to player
         #grab the player summoner icon id
-        resp = requests.get(get_summoner_url + match_id + api_key)
+        resp = requests.get(get_summoner_url + playerID + api_key)
         summoner = resp.json()
 
         summoner_profile_id = summoner["profileIconId"]
@@ -135,12 +133,12 @@ def updatePlayer():
             {"PlayerID": playerID},  # Filter by PlayerID
             {"$set": {  # Use $set operator to update or set fields
                 "summoner_name": player['summoner_name'],
+                "summoner_profile_id" : player['summoner_name'],
                 "kills": player['kills'],
                 "deaths": player['deaths'],
                 "assists": player['assists'],
                 "vision_score": player['vision_score'],
                 "gold_earned": player['gold_earned'],
-                "summoner_profile_id" : summoner_profile_id
 
             }},
             upsert=True  # If PlayerID doesn't exist, create a new document
@@ -193,6 +191,8 @@ def updateLeaderBoard():
 
 
 enterMatchData()
+print("Finished match data")
 calculateKDA()
 updatePlayer()
 updateLeaderBoard()
+print("Finished")
