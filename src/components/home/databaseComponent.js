@@ -42,6 +42,7 @@ class DatabaseComponent extends React.Component {
             <Typography>Three: {collection.three}</Typography>
             <Typography>Four: {collection.four}</Typography>
             <Typography>Five: {collection.five}</Typography>
+            <Typography>Six: {collection.six}</Typography>
           </div>
         )}
       </div>

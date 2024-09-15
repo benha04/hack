@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     three: Number,
     four: Number,
     five: Number,
+    six: Number,
 });
 
 const userModel = mongoose.model('User', userSchema);
