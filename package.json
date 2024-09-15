@@ -29,6 +29,7 @@
   },
   "scripts": {
     "dev": "nodemon index.js",
+    "server": "node api/index.js",
     "start": "react-scripts start --transformIgnorePatterns \"node_modules/(?!@mui)/\"",
     "build": "react-scripts build --transformIgnorePatterns \"node_modules/(?!@mui)/\"",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@mui)/\"",

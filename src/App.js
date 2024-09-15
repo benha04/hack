@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { themeOptions } from "./ThemeOptions.tsx";
 import { ThemeProvider } from "@emotion/react";
 
