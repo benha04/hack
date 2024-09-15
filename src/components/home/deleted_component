@@ -1,75 +1,98 @@
-{/* Kills and Deaths Side by Side */}
-      <Grid container spacing={4} className="kills-deaths-section">
-        
-        {/* Left Half: Top Players by Kills */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top Players by Kills</Typography>
-          <Grid container spacing={2}>
-            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostKills') &&
-              [leaderBoard.find(l => l.category === 'mostKills').one,
-              leaderBoard.find(l => l.category === 'mostKills').two,
-              leaderBoard.find(l => l.category === 'mostKills').three,
-              leaderBoard.find(l => l.category === 'mostKills').four,
-              leaderBoard.find(l => l.category === 'mostKills').five,
-              leaderBoard.find(l => l.category === 'mostKills').six].map((playerID, rankIndex) => 
-                renderPlayerCard(playerID, rankIndex)
-              )
-            }
-          </Grid>
-        </Grid>
+import React, { useState, useEffect } from "react";
+import { Grid, Card, CardContent, Typography } from "@mui/material";
+import Ranking from "./Ranking.js"; 
+import "../../App.css";
+import "./home.css";
 
-        {/* Right Half: Top Players by Deaths */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top Players by Deaths</Typography>
-          <Grid container spacing={2}>
-            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostDeaths') &&
-              [leaderBoard.find(l => l.category === 'mostDeaths').one,
-              leaderBoard.find(l => l.category === 'mostDeaths').two,
-              leaderBoard.find(l => l.category === 'mostDeaths').three,
-              leaderBoard.find(l => l.category === 'mostDeaths').four,
-              leaderBoard.find(l => l.category === 'mostDeaths').five,
-              leaderBoard.find(l => l.category === 'mostDeaths').six].map((playerID, rankIndex) => 
-                renderPlayerCard(playerID, rankIndex)
-              )
-            }
-          </Grid>
-        </Grid>
+const Home = () => {
+  const [leaderBoard, setLeaderBoard] = useState([]);
+  const [players, setPlayers] = useState([]);
+  const API_URL = "http://localhost:3001/";
+
+  // Fetch leaderboard and player data from the backend
+  const fetchPlayerData = async () => {
+    try {
+      const leaderboardResponse = await fetch(API_URL + "api/LeagueOfLegends/leaderboard");
+      const playersResponse = await fetch(API_URL + "api/LeagueOfLegends/players");
+
+      if (!leaderboardResponse.ok || !playersResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const leaderboardData = await leaderboardResponse.json();
+      const playersData = await playersResponse.json();
+
+      setLeaderBoard(leaderboardData);
+      setPlayers(playersData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlayerData();
+  }, []);
+
+  // Find player stats by summoner_name
+  const findPlayerStats = (summoner_name) => {
+    const player = players.find((p) => p.summoner_name === summoner_name);
+    return player ? player : {};
+  };
+
+  // Render player stats for each ranking category (e.g., kills for "Most Kills")
+  const renderRankingWithStats = (category, playerStat) => {
+    const relevantPlayers = leaderBoard.find((entry) => entry.category === category);
+    if (!relevantPlayers) return null;
+
+    return (
+      <Grid item xs={12} md={6}>
+        <Ranking
+          title={category}
+          one={{ name: relevantPlayers.one, stat: findPlayerStats(relevantPlayers.one)[playerStat] }}
+          two={{ name: relevantPlayers.two, stat: findPlayerStats(relevantPlayers.two)[playerStat] }}
+          three={{ name: relevantPlayers.three, stat: findPlayerStats(relevantPlayers.three)[playerStat] }}
+          four={{ name: relevantPlayers.four, stat: findPlayerStats(relevantPlayers.four)[playerStat] }}
+          five={{ name: relevantPlayers.five, stat: findPlayerStats(relevantPlayers.five)[playerStat] }}
+          six={{ name: relevantPlayers.six, stat: findPlayerStats(relevantPlayers.six)[playerStat] }}
+        />
       </Grid>
+    );
+  };
 
-      {/* Gold Earned and Assists Side by Side */}
-      <Grid container spacing={4} className="gold-assists-section">
-        
-        {/* Left Half: Top Players by Gold Earned */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top Players by Gold Earned</Typography>
-          <Grid container spacing={2}>
-            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostGold') &&
-              [leaderBoard.find(l => l.category === 'mostGold').one,
-              leaderBoard.find(l => l.category === 'mostGold').two,
-              leaderBoard.find(l => l.category === 'mostGold').three,
-              leaderBoard.find(l => l.category === 'mostGold').four,
-              leaderBoard.find(l => l.category === 'mostGold').five,
-              leaderBoard.find(l => l.category === 'mostGold').six].map((playerID, rankIndex) => 
-                renderPlayerCard(playerID, rankIndex)
-              )
-            }
-          </Grid>
-        </Grid>
+  return (
+    <>
+      {/* Highest KDA Player Card */}
+      <Card
+        variant="outlined"
+        sx={{
+          backgroundColor: "#3A2B32",
+          color: "#fff",
+          borderRadius: "40px",
+          padding: "20px",
+          margin: "20px auto",
+          maxWidth: "600px",
+          textAlign: "center",
+        }}
+      >
+        <CardContent>
+          <Typography variant="h1">Highest KDA Player</Typography>
+          <Typography variant="h6">Player: Jayoma</Typography>
+        </CardContent>
+      </Card>
 
-        {/* Right Half: Top Players by Assists */}
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top Players by Assists</Typography>
-          <Grid container spacing={2}>
-            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostAssists') &&
-              [leaderBoard.find(l => l.category === 'mostAssists').one,
-              leaderBoard.find(l => l.category === 'mostAssists').two,
-              leaderBoard.find(l => l.category === 'mostAssists').three,
-              leaderBoard.find(l => l.category === 'mostAssists').four,
-              leaderBoard.find(l => l.category === 'mostAssists').five,
-              leaderBoard.find(l => l.category === 'mostAssists').six].map((playerID, rankIndex) => 
-                renderPlayerCard(playerID, rankIndex)
-              )
-            }
-          </Grid>
-        </Grid>
+      {/* Rankings for Kills, Deaths, Assists, etc. */}
+      <Grid container spacing={4} sx={{ padding: "20px" }}>
+        {/* Most Kills */}
+        {renderRankingWithStats("mostKills", "kills")}
+        {/* Most Deaths */}
+        {renderRankingWithStats("mostDeaths", "deaths")}
+        {/* Most Assists */}
+        {renderRankingWithStats("mostAssists", "assists")}
+        {/* Most Gold Earned */}
+        {renderRankingWithStats("mostGold", "gold_earned")}
       </Grid>
+    </>
+  );
+};
+
+export default Home;

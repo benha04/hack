@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid2, Card, CardContent, Typography, Avatar } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Avatar } from '@mui/material';
 import '../../App.css';
 import './home.css';
 
@@ -51,7 +51,7 @@ const Home = () => {
   const renderPlayerCard = (playerID, rankIndex) => {
     const playerStats = findPlayerStats(playerID);  // Find corresponding player stats
     return (
-      <Grid2 item xs={12} sm={6} key={rankIndex}>
+      <Grid item xs={12} sm={6} key={rankIndex}>
         <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#fff' }}>
           <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
             <Avatar src="/images/player.jpg" alt="Player Avatar" />
@@ -64,33 +64,111 @@ const Home = () => {
             </div>
           </CardContent>
         </Card>
-      </Grid2>
+      </Grid>
     );
   };
 
   return (
-    <div>
-      <Typography variant='h1'>Gobbler Gauntlet</Typography>
+    <div className="home-container">
+      <h1 className="gobbler-heading">Gobbler Gauntlet</h1>
 
       {/* Highest KDA Player Section */}
-      
-        <Grid2 container spacing={2} xs = {12} >
-          
+      {highestKDAPlayer && (
+        <Grid container justifyContent="center" alignItems="center" spacing={2} className="best-kda-section">
+          <Grid item>
+            <img src="/images/ashe-removebg-preview.png" alt="Ashe" className="champion-image" />
+          </Grid>
 
-          <Grid2 item xs = {12}>
+          <Grid item>
             <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333', padding: 4 }}>
               <CardContent>
-                <Typography variant="h1">Highest KDA Player</Typography>
-                <Typography variant="h6">Player: Jayoma</Typography>
+                <h5>Best KDA Player</h5>
+                <h6>{highestKDAPlayer.name}</h6> {/* Displaying the highest KDA player's name */}
               </CardContent>
             </Card>
-          </Grid2>
+          </Grid>
 
-          
-        </Grid2>
-      
+          <Grid item>
+            <img src="/images/lucian-removebg-preview.png" alt="Lucian" className="champion-image" />
+          </Grid>
+        </Grid>
+      )}
 
-      
+      {/* Kills and Deaths Side by Side */}
+      <Grid container spacing={4} className="kills-deaths-section">
+        
+        {/* Left Half: Top Players by Kills */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Kills</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostKills') &&
+              [leaderBoard.find(l => l.category === 'mostKills').one,
+              leaderBoard.find(l => l.category === 'mostKills').two,
+              leaderBoard.find(l => l.category === 'mostKills').three,
+              leaderBoard.find(l => l.category === 'mostKills').four,
+              leaderBoard.find(l => l.category === 'mostKills').five,
+              leaderBoard.find(l => l.category === 'mostKills').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+
+        {/* Right Half: Top Players by Deaths */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Deaths</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostDeaths') &&
+              [leaderBoard.find(l => l.category === 'mostDeaths').one,
+              leaderBoard.find(l => l.category === 'mostDeaths').two,
+              leaderBoard.find(l => l.category === 'mostDeaths').three,
+              leaderBoard.find(l => l.category === 'mostDeaths').four,
+              leaderBoard.find(l => l.category === 'mostDeaths').five,
+              leaderBoard.find(l => l.category === 'mostDeaths').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Gold Earned and Assists Side by Side */}
+      <Grid container spacing={4} className="gold-assists-section">
+        
+        {/* Left Half: Top Players by Gold Earned */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Gold Earned</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostGold') &&
+              [leaderBoard.find(l => l.category === 'mostGold').one,
+              leaderBoard.find(l => l.category === 'mostGold').two,
+              leaderBoard.find(l => l.category === 'mostGold').three,
+              leaderBoard.find(l => l.category === 'mostGold').four,
+              leaderBoard.find(l => l.category === 'mostGold').five,
+              leaderBoard.find(l => l.category === 'mostGold').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+
+        {/* Right Half: Top Players by Assists */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h5" className="section-title">Top Players by Assists</Typography>
+          <Grid container spacing={2}>
+            {leaderBoard.length > 0 && leaderBoard.find(l => l.category === 'mostAssists') &&
+              [leaderBoard.find(l => l.category === 'mostAssists').one,
+              leaderBoard.find(l => l.category === 'mostAssists').two,
+              leaderBoard.find(l => l.category === 'mostAssists').three,
+              leaderBoard.find(l => l.category === 'mostAssists').four,
+              leaderBoard.find(l => l.category === 'mostAssists').five,
+              leaderBoard.find(l => l.category === 'mostAssists').six].map((playerID, rankIndex) => 
+                renderPlayerCard(playerID, rankIndex)
+              )
+            }
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 };
