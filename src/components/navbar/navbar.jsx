@@ -11,7 +11,7 @@ function Navbar() {
         alignItems: 'center',
       }}
     >
-      <Avatar alt="Remy Sharp" src="images/logo.png" sx={{ width: 128, height: 128 }} />
+      <Avatar alt="Remy Sharp" src="/images/logo.png" sx={{ width: 128, height: 128 }} />
       <Typography variant= "h1" style={{ marginLeft: '16px' }} color="white">Gobbler Gauntlet</Typography> {/* You can customize the logo or title here */}
     </Box>
       <div className="navbar-right">
