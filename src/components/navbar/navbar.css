@@ -7,7 +7,7 @@
     width: 100%;
     /*background-color: #2A2126; Dark background color */
     background: linear-gradient(#2A2126, #3D2E33);
-    padding: 25px 20px; /* Adjust padding here for desired space */
+    padding: 5px 20px; /* Adjust padding here for desired space */
     display: flex;
     justify-content: space-between; /* Space between left and right content */
     align-items: center;
