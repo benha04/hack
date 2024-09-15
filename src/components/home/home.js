@@ -9,7 +9,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import "./home.css";
-import Player from "./Player.js";
 import Ranking from "./Ranking.js";
 
 // Importing custom icons
@@ -17,6 +16,8 @@ import Death from "../../icons/Deaths.png";
 import Gold from "../../icons/Gold.png";
 import Placements from "../../icons/Placements.png";
 import Assists from "../../icons/Assists.png";
+import Kda from "../../icons/Kda.png";
+import Vision from "../../icons/Vision.png";
 
 const Home = () => {
   const [leaderBoard, setLeaderBoard] = useState([]);
@@ -29,6 +30,8 @@ const Home = () => {
   const customGold = Gold;
   const customAssists = Assists;
   const customPlacements = Placements;
+  const customKda = Kda;
+  const customVision = Vision;
 
   // Media queries for responsiveness
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -231,14 +234,29 @@ const Home = () => {
 
       {/* Rankings Section */}
       <div className="home-container">
-        <Typography variant="h1" className="section-title">
+      <Box
+        sx={{
+          width: '100vw', // Full viewport width
+          backgroundColor: '#3A2B32', // Background color
+          height: '100px', // Height of the box
+          // padding: '16px', // Padding for spacing
+          display: 'flex', // Flexbox for centering content
+          justifyContent: 'center', // Center horizontally
+          alignItems: 'center', // Center vertically
+        }}
+      >
+        <Typography variant="h1" color="white">
           Player Rankings
         </Typography>
-        <Grid container spacing={4} justifyContent="center">
+      </Box>
+        <Grid container spacing={4} justifyContent="center" sx = {{padding: '32px'}}>
           {renderRankingWithStats("mostKills", "kills", customPlacements)}
           {renderRankingWithStats("mostDeaths", "deaths", customDeaths)}
           {renderRankingWithStats("mostAssists", "assists", customAssists)}
           {renderRankingWithStats("mostGold", "gold_earned", customGold)}
+          {renderRankingWithStats("highestKDA", "Best KDA", customKda)}
+          {renderRankingWithStats("mostVisionScore", "Best Vision Score", customVision)}
+
         </Grid>
       </div>
     </>
