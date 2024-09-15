@@ -3,47 +3,56 @@ import { Grid, Card, CardContent, Typography, Avatar } from '@mui/material';
 import '../../App.css';
 import './home.css';
 
-// Card content for Best KDA Player
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <h5>Best KDA Player</h5>
-      <h6>Player name </h6>
-    </CardContent>
-  </React.Fragment>
-);
-
 const Home = () => {
   const [topKillers, setTopKillers] = useState([]);
   const [topDeaths, setTopDeaths] = useState([]);
+  const [highestKDAPlayer, setHighestKDAPlayer] = useState(null);
+  const API_URL = "http://localhost:3001/";
 
-  // Simulating async data fetching
+  // Fetching real data from API
   const fetchPlayerData = async () => {
-    const fetchedKillers = [
-      { name: 'John Doe', kills: 15, img: '/images/player.jpg' },
-      { name: 'Jane Smith', kills: 12, img: '/images/player.jpg' },
-      { name: 'Mike Johnson', kills: 10, img: '/images/player.jpg' },
-      { name: 'Sarah Brown', kills: 9, img: '/images/player.jpg' },
-      { name: 'Alex King', kills: 8, img: '/images/player.jpg' },
-      { name: 'Chris Lee', kills: 7, img: '/images/player.jpg' } // Added 6th player for kills
+    try {
+      const response = await fetch(API_URL + "api/LeagueOfLegends/collections");
+      const data = await response.json();
 
-    ];
+      // Filter or map the collections to focus on kills, deaths, and highestKDA
+      const killsCategory = data.find(collection => collection.category === 'mostKills');
+      const deathsCategory = data.find(collection => collection.category === 'mostDeaths');
+      const kdaCategory = data.find(collection => collection.category === 'highestKDA');
 
-    const fetchedDeaths = [
-      { name: 'John Doe', deaths: 10, img: '/images/player.jpg' },
-      { name: 'Jane Smith', deaths: 9, img: '/images/player.jpg' },
-      { name: 'Mike Johnson', deaths: 8, img: '/images/player.jpg' },
-      { name: 'Sarah Brown', deaths: 7, img: '/images/player.jpg' },
-      { name: 'Alex King', deaths: 6, img: '/images/player.jpg' },
-      { name: 'Chris Lee', deaths: 5, img: '/images/player.jpg' } // Added 6th player for deaths
+      if (killsCategory) {
+        setTopKillers([
+          { name: killsCategory.one, rank: 1 },
+          { name: killsCategory.two, rank: 2 },
+          { name: killsCategory.three, rank: 3 },
+          { name: killsCategory.four, rank: 4 },
+          { name: killsCategory.five, rank: 5 },
+          { name: killsCategory.six, rank: 6 },
 
-    ];
+        ]);
+      }
 
-    // Simulate delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (deathsCategory) {
+        setTopDeaths([
+          { name: deathsCategory.one, rank: 1 },
+          { name: deathsCategory.two, rank: 2 },
+          { name: deathsCategory.three, rank: 3 },
+          { name: deathsCategory.four, rank: 4 },
+          { name: deathsCategory.five, rank: 5 },
+          { name: deathsCategory.six, rank: 6 },
 
-    setTopKillers(fetchedKillers);
-    setTopDeaths(fetchedDeaths);
+        ]);
+      }
+
+      // Get the highest KDA player
+      if (kdaCategory) {
+        setHighestKDAPlayer({
+          name: kdaCategory.one, // Assume 'one' represents the top KDA player
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   useEffect(() => {
@@ -54,38 +63,42 @@ const Home = () => {
     <div className="home-container">
       <h1 className="gobbler-heading">Gobbler Gauntlet</h1>
 
-      {/* Best KDA Player Card with Ashe and Lucian Images */}
-      <Grid container justifyContent="center" alignItems="center" spacing={2} className="best-kda-section">
-        <Grid item>
-          <img src = "images/ashe-removebg-preview.png" alt="Ashe" className="champion-image" />
-        </Grid>
+      {/* Highest KDA Player Section */}
+      {highestKDAPlayer && (
+        <Grid container justifyContent="center" alignItems="center" spacing={2} className="best-kda-section">
+          <Grid item>
+            <img src="/images/ashe-removebg-preview.png" alt="Ashe" className="champion-image" />
+          </Grid>
 
-        <Grid item>
-          <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333', padding: 4 }}>
-            {card}
-          </Card>
-        </Grid>
+          <Grid item>
+            <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333', padding: 4 }}>
+              <CardContent>
+                <h5>Best KDA Player</h5>
+                <h6>{highestKDAPlayer.name}</h6> {/* Displaying the highest KDA player's name */}
+              </CardContent>
+            </Card>
+          </Grid>
 
-        <Grid item>
-          <img src="images/lucian-removebg-preview.png" alt="Lucian" className="champion-image" />
+          <Grid item>
+            <img src="/images/lucian-removebg-preview.png" alt="Lucian" className="champion-image" />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
 
-      {/* Top Killers and Deaths Grid */}
+      {/* Kills on the Left and Deaths on the Right */}
       <Grid container spacing={4} className="kills-deaths-section">
         
-        {/* Top 6 Players - Kills Section */}
+        {/* Left Half: Top Players by Kills */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top 6 Players - Kills</Typography>
+          <Typography variant="h5" className="section-title">Top Players by Kills</Typography>
           <Grid container spacing={2}>
             {topKillers.map((player, index) => (
               <Grid item xs={12} sm={6} lg={6} key={index}>
                 <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333' }}>
                   <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar src={player.img} alt={`${player.name} Image`} />
+                    <Avatar src="/images/player.jpg" alt="Player Avatar" />
                     <div style={{ marginLeft: '16px' }}>
-                      <Typography variant="h6" sx={{ color: '#fff' }}>{player.name}</Typography>
-                      <Typography variant="body1" sx={{ color: '#fff' }}>Kills: {player.kills}</Typography>
+                      <Typography variant="h6" sx={{ color: '#fff' }}>{player.rank}st: {player.name}</Typography>
                     </div>
                   </CardContent>
                 </Card>
@@ -94,18 +107,17 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        {/* Top 6 Players - Deaths Section */}
+        {/* Right Half: Top Players by Deaths */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h5" className="section-title">Top 6 Players - Deaths</Typography>
+          <Typography variant="h5" className="section-title">Top Players by Deaths</Typography>
           <Grid container spacing={2}>
             {topDeaths.map((player, index) => (
               <Grid item xs={12} sm={6} lg={6} key={index}>
                 <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333' }}>
                   <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar src={player.img} alt={`${player.name} Image`} />
+                    <Avatar src="/images/player.jpg" alt="Player Avatar" />
                     <div style={{ marginLeft: '16px' }}>
-                      <Typography variant="h6" sx={{ color: '#fff' }}>{player.name}</Typography>
-                      <Typography variant="body1" sx={{ color: '#fff' }}>Deaths: {player.deaths}</Typography>
+                      <Typography variant="h6" sx={{ color: '#fff' }}>{player.rank}st: {player.name}</Typography>
                     </div>
                   </CardContent>
                 </Card>
@@ -119,4 +131,3 @@ const Home = () => {
 };
 
 export default Home;
-
