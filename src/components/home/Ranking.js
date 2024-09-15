@@ -18,6 +18,10 @@ const Ranking = (props) => {
         return "Most Assists";
       case "mostGold":
         return "Most Gold Earned";
+      case "highestKDA":
+        return "Highest KDA";
+        case "mostVisionScore":
+          return "Highest Vision Score";
       default:
         return title;
     }

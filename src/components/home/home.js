@@ -254,8 +254,8 @@ const Home = () => {
           {renderRankingWithStats("mostDeaths", "deaths", customDeaths)}
           {renderRankingWithStats("mostAssists", "assists", customAssists)}
           {renderRankingWithStats("mostGold", "gold_earned", customGold)}
-          {renderRankingWithStats("highestKDA", "Best KDA", customKda)}
-          {renderRankingWithStats("mostVisionScore", "Best Vision Score", customVision)}
+          {renderRankingWithStats("highestKDA", "kda", customKda)}
+          {renderRankingWithStats("mostVisionScore", "vision_score", customVision)}
 
         </Grid>
       </div>
