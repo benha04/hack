@@ -6,6 +6,7 @@ import {
   Grid2,
   Box,
   Avatar,
+  useMediaQuery,
 } from "@mui/material";
 
 import "../../App.css";
@@ -15,12 +16,31 @@ import Player from "./Player.js";
 import Ranking from "./Ranking.js";
 
 // import BestPlayerIcon from "icons/primary.png";
+import Death from "../../icons/Deaths.png";
+import Gold from "../../icons/Gold.png";
+import Placements from "../../icons/Placements.png";
+import Assists from "../../icons/Assists.png";
 
 const Home = () => {
 
   const [leaderBoard, setLeaderBoard] = useState([]);
   const [players, setPlayers] = useState([]);
   const API_URL = "http://localhost:3001/";
+  const customDeaths = Death;
+  const customGold = Gold;
+  const customAssists = Assists;
+  const customPlacements = Placements;
+
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const isMediumScreen = useMediaQuery((theme) => theme.breakpoints.between('sm', 'md'));
+  const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up('md'));
+
+  const getCardWidth = () => {
+    if (isSmallScreen) return '90%';
+    if (isMediumScreen) return '70%';
+    if (isLargeScreen) return '50%';
+    return '90%';
+  };
 
   // Fetch leaderboard and player data from the backend
   const fetchPlayerData = async () => {
@@ -53,14 +73,14 @@ const Home = () => {
   };
 
   // Render player stats for each ranking category (e.g., kills for "Most Kills")
-  const renderRankingWithStats = (category, playerStat) => {
+  const renderRankingWithStats = (category, playerStat, path) => {
     const relevantPlayers = leaderBoard.find((entry) => entry.category === category);
     if (!relevantPlayers) return null;
 
     return (
       <Grid2 container item xs={6} justifyContent="center">
        <Ranking
-         customIcon = "/icons/Deaths.png"
+         customIcon = {path}
 
          title={category}
          one={{ name: relevantPlayers.one, stat: findPlayerStats(relevantPlayers.one)[playerStat] }}
@@ -122,7 +142,7 @@ const Home = () => {
             color: "#333",
             borderRadius: "40px",
             marginTop: "0px",
-            minWidth: "749px", // Set minimum width
+            width: getCardWidth(), // Set dynamic width
           }}
         >
           <CardContent>
@@ -163,9 +183,9 @@ const Home = () => {
         direction="row"
         justifyContent="center"
       >
-        {renderRankingWithStats("mostKills", "kills")}
+        {renderRankingWithStats("mostKills", "kills", customPlacements)}
 
-        {renderRankingWithStats("mostDeaths", "deaths")}
+        {renderRankingWithStats("mostDeaths", "deaths", customDeaths)}
         </Grid2>
         <Grid2
         container
@@ -174,9 +194,9 @@ const Home = () => {
         direction="row"
         justifyContent="center"
       >
-        {renderRankingWithStats("mostAssists", "assists")}
+        {renderRankingWithStats("mostAssists", "assists", customAssists)}
 
-        {renderRankingWithStats("mostGold", "gold_earned")}
+        {renderRankingWithStats("mostGold", "gold_earned", customGold)}
 
         </Grid2>
       </Grid2>

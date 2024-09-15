@@ -10,7 +10,7 @@ const Player = (props) => {
           sx={{ width: 64, height: 64, marginLeft: '16px', marginRight: '16px' }}
         />
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          <Typography variant="h3" color="white">
+          <Typography variant="h2" color="white">
             {props.name} - {props.stat || "N/A"}
           </Typography>
           

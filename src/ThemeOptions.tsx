@@ -22,8 +22,30 @@ export const themeOptions: ThemeOptions = {
   typography: {
     fontFamily: 'Aoboshi One',
     h1: {
-        fontSize: '3.5rem',
+      fontFamily: 'Jura',
+      fontWeight: 400,
+      fontSize: '1rem', // Default for extra-small devices (phones)
+      '@media (min-width:600px)': {
+        fontSize: '1.5rem', // Small devices (tablets)
       },
+      '@media (min-width:960px)': {
+        fontSize: '2rem', // Medium devices (desktops)
+      },
+    },
+    h2: {
+      fontFamily: 'Jura',
+      fontWeight: 400,
+      fontSize: '0.8rem', // Default for extra-small devices (phones)
+      '@media (min-width:600px)': {
+        fontSize: '1.0rem', // Small devices (tablets)
+      },
+      '@media (min-width:960px)': {
+        fontSize: '1rem', // Medium devices (desktops)
+      },
+      '@media (min-width:1280px)' : {
+        fontSize: '2.5rem', // Large devices (desktops)
+      },
+    },
   },
   
 };

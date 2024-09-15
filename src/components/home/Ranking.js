@@ -39,7 +39,7 @@ const Ranking = (props) => {
           color: "#333",
           borderRadius: "40px",
           marginTop: "40px",
-          minWidth: "500px",
+          minWidth: "300px",
         }}
       >
         <CardContent>
