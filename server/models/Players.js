@@ -7,6 +7,7 @@ const playerSchema = new mongoose.Schema({
     gold_earned: Number,
     kills: Number,
     vision_score: Number,
+    summoner_name: String,
 });
 
 const userModel = mongoose.model('Player', userSchema);
