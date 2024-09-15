@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardContent, Typography, Avatar } from '@mui/material';
+import { Grid2, Card, CardContent, Typography, Avatar } from '@mui/material';
 import '../../App.css';
 import './home.css';
 
@@ -51,7 +51,7 @@ const Home = () => {
   const renderPlayerCard = (playerID, rankIndex) => {
     const playerStats = findPlayerStats(playerID);  // Find corresponding player stats
     return (
-      <Grid item xs={12} sm={6} key={rankIndex}>
+      <Grid2 item xs={12} sm={6} key={rankIndex}>
         <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#fff' }}>
           <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
             <Avatar src="/images/player.jpg" alt="Player Avatar" />
@@ -64,35 +64,31 @@ const Home = () => {
             </div>
           </CardContent>
         </Card>
-      </Grid>
+      </Grid2>
     );
   };
 
   return (
-    <div className="home-container">
-      <h1 className="gobbler-heading">Gobbler Gauntlet</h1>
+    <div>
+      <Typography variant='h1'>Gobbler Gauntlet</Typography>
 
       {/* Highest KDA Player Section */}
-      {highestKDAPlayer && (
-        <Grid container justifyContent="center" alignItems="center" spacing={2} className="best-kda-section">
-          <Grid item>
-            <img src="/images/ashe-removebg-preview.png" alt="Ashe" className="champion-image" />
-          </Grid>
+      
+        <Grid2 container spacing={2} xs = {12} >
+          
 
-          <Grid item>
+          <Grid2 item xs = {12}>
             <Card variant="outlined" sx={{ backgroundColor: '#3A2B32', color: '#333', padding: 4 }}>
               <CardContent>
-                <h5>Best KDA Player</h5>
-                <h6>{highestKDAPlayer.name}</h6> {/* Displaying the highest KDA player's name */}
+                <Typography variant="h1">Highest KDA Player</Typography>
+                <Typography variant="h6">Player: Jayoma</Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid2>
 
-          <Grid item>
-            <img src="/images/lucian-removebg-preview.png" alt="Lucian" className="champion-image" />
-          </Grid>
-        </Grid>
-      )}
+          
+        </Grid2>
+      
 
       
     </div>
