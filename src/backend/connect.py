@@ -10,6 +10,7 @@ uri = "mongodb+srv://zehan:q2w1e4r3t6y5@cluster0.z30i1.mongodb.net/?retryWrites=
 api_key = "?api_key=RGAPI-d02ad7c4-fb12-4fd2-838e-124917b0da14"
 match_id = "5108988079"
 get_match_url = "https://americas.api.riotgames.com/lol/match/v5/matches/NA1_"
+get_account_url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/"
 
 #####################################################################################################
 
@@ -22,6 +23,7 @@ db = client["LeagueOfLegends"]
 players = db["players"]
 games = db["Games"]
 
+leaderboard = db["leaderboard"]
 
 
 
@@ -52,8 +54,13 @@ def enterMatchData():
 def parsePlayerData(match_id):
     playerIDs = []
     # Get match JSON
+    print(get_match_url + match_id + api_key)
     resp = requests.get(get_match_url + match_id + api_key)
     match = resp.json()
+
+
+
+
     
     # Loop through the participants and create a dictionary with an empty list as value
     for playerid in match['metadata']['participants']:
@@ -87,6 +94,7 @@ def parsePlayerData(match_id):
         
         if not foundPlayer:
             playerData.append({
+                'playerid': playerid,
                 'kills': kills,
                 'deaths': deaths,
                 'assists': assists,
@@ -104,8 +112,8 @@ def calculateKDA():
         kills = player['kills']
         deaths = player['deaths']
         assists = player['assists']
-
-        player['kda'] = (kills+assists)/deaths
+        
+        player['kda'] = (kills+assists)/deaths if deaths != 0 else kills + assists
 
 
 
@@ -133,16 +141,53 @@ def updatePlayer():
 
 def updateLeaderBoard():
     """
-    update leaderboard
-    for most kills, deaths, assists, kda, gold earned
-    
+    Update leaderboard for top 6 players in each category:
+    most kills, deaths, assists, kda, gold earned, and vision score
+    Creating separate documents for each category with ranked players
     """
 
+    categories = {
+        'mostKills': 'kills',
+        'mostDeaths': 'deaths',
+        'mostAssists': 'assists',
+        'mostGold': 'gold_earned',
+        'highestKDA': 'kda',
+        'mostVisionScore': 'vision_score'
+    }
 
-    return None
+    for category_name, player_key in categories.items():
+        # Sort players by the current category in descending order
+        sorted_players = sorted(playerData, key=lambda x: x[player_key], reverse=True)
+        
+        # Get the top 6 players for this category
+        top_6 = sorted_players[:6]
+
+        # Create a dictionary for the category document
+        category_document = {
+            'category': category_name
+        }
+
+        numbers = ["one", "two", "three", "four", "five", "six"]
+        # Add ranked players to the document
+        for idx, player in enumerate(top_6, 0):
+            puuid = player['playerid']
+            resp = requests.get(get_account_url + puuid + api_key)
+            account = resp.json()
+            summoner_name = account['gameName']
+            
+            category_document[numbers[idx]] = summoner_name
+
+        # Update or insert the category document
+        leaderboard.update_one(
+            {'category': category_name},
+            {'$set': category_document},
+            upsert=True
+        )
+
 
 
 
 enterMatchData()
 calculateKDA()
 updatePlayer()
+updateLeaderBoard()
