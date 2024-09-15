@@ -133,7 +133,7 @@ def updatePlayer():
             {"PlayerID": playerID},  # Filter by PlayerID
             {"$set": {  # Use $set operator to update or set fields
                 "summoner_name": player['summoner_name'],
-                "summoner_profile_id" : player['summoner_name'],
+                "summoner_profile_id" : summoner_profile_id,
                 "kills": player['kills'],
                 "deaths": player['deaths'],
                 "assists": player['assists'],
