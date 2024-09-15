@@ -41,33 +41,44 @@ h6{
     margin-bottom: 20px;
   }
   
-  .player-card-content {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  /* Avatar */
-  .player-avatar {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
-  }
-  
-  /* Player info inside the card */
-  .player-info {
-    text-align: left;
-  }
-  
-  .player-info h6 {
-    margin: 0;
-    font-size: 1.2rem;
-  }
-  
-  .player-info p {
-    margin: 5px 0;
-  }
-  
+/* Add to your existing CSS */
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
+  background-color: #3A2B32;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  word-wrap: break-word;
+}
+
+.player-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Ensure content fits within the card */
+}
+
+.player-info {
+  text-align: center;
+  width: 100%; /* Ensure text does not overflow */
+}
+
+.player-avatar {
+  margin-bottom: 10px;
+}
+
+.typography-overflow {
+  font-size: 0.875rem; /* Smaller font size for player ID */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%; /* Limit width to prevent overflow */
+}
+
   .champion-image {
     width: 500px; /* Adjust size as needed */
     height: auto;
