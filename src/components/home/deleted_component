@@ -54,6 +54,7 @@ const Home = () => {
           four={{ name: relevantPlayers.four, stat: findPlayerStats(relevantPlayers.four)[playerStat] }}
           five={{ name: relevantPlayers.five, stat: findPlayerStats(relevantPlayers.five)[playerStat] }}
           six={{ name: relevantPlayers.six, stat: findPlayerStats(relevantPlayers.six)[playerStat] }}
+          
         />
       </Grid>
     );

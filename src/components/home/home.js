@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,7 +18,66 @@ import Ranking from "./Ranking.js";
 
 const Home = () => {
 
-  const BestPlayerIcon = "/images/primary.png";
+  const [leaderBoard, setLeaderBoard] = useState([]);
+  const [players, setPlayers] = useState([]);
+  const API_URL = "http://localhost:3001/";
+
+  // Fetch leaderboard and player data from the backend
+  const fetchPlayerData = async () => {
+    try {
+      const leaderboardResponse = await fetch(API_URL + "api/LeagueOfLegends/leaderboard");
+      const playersResponse = await fetch(API_URL + "api/LeagueOfLegends/players");
+
+      if (!leaderboardResponse.ok || !playersResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const leaderboardData = await leaderboardResponse.json();
+      const playersData = await playersResponse.json();
+
+      setLeaderBoard(leaderboardData);
+      setPlayers(playersData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlayerData();
+  }, []);
+
+  // Find player stats by summoner_name
+  const findPlayerStats = (summoner_name) => {
+    const player = players.find((p) => p.summoner_name === summoner_name);
+    return player ? player : {};
+  };
+
+  // Render player stats for each ranking category (e.g., kills for "Most Kills")
+  const renderRankingWithStats = (category, playerStat) => {
+    const relevantPlayers = leaderBoard.find((entry) => entry.category === category);
+    if (!relevantPlayers) return null;
+
+    return (
+      <Grid2 container item xs={6} justifyContent="center">
+       <Ranking
+         customIcon = "/icons/Deaths.png"
+
+         title={category}
+         one={{ name: relevantPlayers.one, stat: findPlayerStats(relevantPlayers.one)[playerStat] }}
+         two={{ name: relevantPlayers.two, stat: findPlayerStats(relevantPlayers.two)[playerStat] }}
+         three={{ name: relevantPlayers.three, stat: findPlayerStats(relevantPlayers.three)[playerStat] }}
+           four={{ name: relevantPlayers.four, stat: findPlayerStats(relevantPlayers.four)[playerStat] }}
+           five={{ name: relevantPlayers.five, stat: findPlayerStats(relevantPlayers.five)[playerStat] }}
+          six={{ name: relevantPlayers.six, stat: findPlayerStats(relevantPlayers.six)[playerStat] }}
+      />
+    </Grid2>
+
+      
+    );
+  };
+
+  
+
   return (
     <>
       <Box
@@ -104,29 +163,9 @@ const Home = () => {
         direction="row"
         justifyContent="center"
       >
-        <Grid2 container item xs={6} justifyContent="center">
-          <Ranking
-            customIcon = "/icons/Placements.png"
-            title="Most Kills"
-            one="Agura"
-            two="Jayoma"
-            three="ERIK"
-            four="ABEAS"
-            five="MasterMi"
-          />
-        </Grid2>
-        <Grid2 container item xs={6} justifyContent="center">
-          <Ranking
-            customIcon = "/icons/Deaths.png"
+        {renderRankingWithStats("mostKills", "kills")}
 
-            title="Most Deaths"
-            one="Agura"
-            two="Jayoma"
-            three="ERIK"
-            four="ABEAS"
-            five="MasterMi"
-          />
-        </Grid2>
+        {renderRankingWithStats("mostDeaths", "deaths")}
         </Grid2>
         <Grid2
         container
@@ -135,29 +174,10 @@ const Home = () => {
         direction="row"
         justifyContent="center"
       >
-        <Grid2 container item xs={6} justifyContent="center">
-          <Ranking
-            customIcon = "/icons/Gold.png"
-            title="Most Gold Earned"
-            one="Agura"
-            two="Jayoma"
-            three="ERIK"
-            four="ABEAS"
-            five="MasterMi"
-          />
-        </Grid2>
-        <Grid2 container item xs={6} justifyContent="center">
-          <Ranking
-            customIcon = "/icons/Assists.png"
+        {renderRankingWithStats("mostAssists", "assists")}
 
-            title="Most Assists"
-            one="Agura"
-            two="Jayoma"
-            three="ERIK"
-            four="ABEAS"
-            five="MasterMi"
-          />
-        </Grid2>
+        {renderRankingWithStats("mostGold", "gold_earned")}
+
         </Grid2>
       </Grid2>
     </>

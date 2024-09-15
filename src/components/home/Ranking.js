@@ -11,6 +11,25 @@ import DraftsIcon from "@mui/icons-material/MilitaryTech";
 import Player from "./Player.js";
 
 const Ranking = (props) => {
+
+    const players = [props.one, props.two, props.three, props.four, props.five]; 
+
+    const title = props.title;
+  const formatTitle = (title) => {
+    switch (title) {
+      case "mostKills":
+        return "Most Kills";
+      case "mostDeaths":
+        return "Most Deaths";
+      case "mostAssists":
+        return "Most Assists";
+      case "mostGold":
+        return "Most Gold Earned";
+      default:
+        return title;
+    }
+  };
+
   return (
     <Grid2 item>
       <Card
@@ -31,25 +50,17 @@ const Ranking = (props) => {
         style={{ width: '32px', height: '32px', marginRight: '8px' }}
       />
       <Typography variant="h1" color="white" sx = {{marginBottom: "10px"}}>
-        {props.title}
+      {formatTitle(title)}
       </Typography>
     </div>
           <Grid2 container spacing={2} xs={12} direction={"column"}>
+            {players.map((player, index) => (
             <Grid2 item xs={12}>
-              <Player name={props.one} />
-            </Grid2>
-            <Grid2 item xs={12}>
-              <Player name={props.two} />
-            </Grid2>
-            <Grid2 item xs={12}>
-              <Player name={props.three} />
-            </Grid2>
-            <Grid2 item xs={12}>
-              <Player name={props.four} />
-            </Grid2>
-            <Grid2 item xs={12}>
-              <Player name={props.five} />
-            </Grid2>
+            <Player name={player.name} stat = {player.stat} />
+          </Grid2>
+          ))}
+            
+          
           </Grid2>
         </CardContent>
       </Card>
